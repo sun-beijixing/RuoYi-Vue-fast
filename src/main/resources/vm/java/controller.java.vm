@@ -17,7 +17,6 @@ import ${packageName}.domain.${ClassName};
 import ${packageName}.service.I${ClassName}Service;
 import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.domain.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
 #if($table.crud || $table.sub)
 import com.ruoyi.framework.web.page.TableDataInfo;
 #elseif($table.tree)
