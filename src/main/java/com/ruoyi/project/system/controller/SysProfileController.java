@@ -4,8 +4,6 @@ import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.common.utils.file.FileUploadUtils;
-import com.ruoyi.framework.config.RuoYiConfig;
 import com.ruoyi.framework.security.LoginUser;
 import com.ruoyi.framework.security.service.TokenService;
 import com.ruoyi.framework.web.controller.BaseController;
@@ -14,9 +12,6 @@ import com.ruoyi.project.system.domain.SysUser;
 import com.ruoyi.project.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 /**
  * 个人信息 业务处理
@@ -104,26 +99,26 @@ public class SysProfileController extends BaseController
         return AjaxResult.error("修改密码异常，请联系管理员");
     }
 
-    /**
-     * 头像上传
-     */
-    @PostMapping("/avatar")
-    public AjaxResult avatar(@RequestParam("avatarfile") MultipartFile file) throws IOException
-    {
-        if (!file.isEmpty())
-        {
-            LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-            String avatar = FileUploadUtils.upload(RuoYiConfig.getAvatarPath(), file);
-            if (userService.updateUserAvatar(loginUser.getUsername(), avatar))
-            {
-                AjaxResult ajax = AjaxResult.success();
-                ajax.put("imgUrl", avatar);
-                // 更新缓存用户头像
-                loginUser.getUser().setAvatar(avatar);
-                tokenService.setLoginUser(loginUser);
-                return ajax;
-            }
-        }
-        return AjaxResult.error("上传图片异常，请联系管理员");
-    }
+//    /**
+//     * 头像上传
+//     */
+//    @PostMapping("/avatar")
+//    public AjaxResult avatar(@RequestParam("avatarfile") MultipartFile file) throws IOException
+//    {
+//        if (!file.isEmpty())
+//        {
+//            LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+//            String avatar = FileUploadUtils.upload(RuoYiConfig.getAvatarPath(), file);
+//            if (userService.updateUserAvatar(loginUser.getUsername(), avatar))
+//            {
+//                AjaxResult ajax = AjaxResult.success();
+//                ajax.put("imgUrl", avatar);
+//                // 更新缓存用户头像
+//                loginUser.getUser().setAvatar(avatar);
+//                tokenService.setLoginUser(loginUser);
+//                return ajax;
+//            }
+//        }
+//        return AjaxResult.error("上传图片异常，请联系管理员");
+//    }
 }
